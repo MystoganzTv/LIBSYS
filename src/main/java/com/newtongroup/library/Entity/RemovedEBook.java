@@ -15,4 +15,12 @@ public class RemovedEBook extends AbstractRemovedObject {
 	@JoinColumn(name = "e_book_id")
 	private EBook ebook;
 
+	public EBook getEbook() {
+		return ebook;
+	}
+
+	public void setEbook(EBook ebook) {
+		this.ebook = ebook;
+	}
+
 }

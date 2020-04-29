@@ -1,6 +1,6 @@
 package com.newtongroup.library.Entity;
 
-import org.hibernate.search.annotations.Field;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +13,7 @@ import javax.persistence.Table;
 
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 @Entity
 @Indexed
@@ -24,6 +25,7 @@ public abstract class AbstractBook extends AbstractRental {
 	@Field
 	private String isbn;
 
+	@IndexedEmbedded
 	@ManyToMany
 	@JoinTable(
 			name="book_author",

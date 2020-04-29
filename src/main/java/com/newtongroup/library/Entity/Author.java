@@ -1,5 +1,6 @@
 package com.newtongroup.library.Entity;
 
+import org.hibernate.search.annotations.ContainedIn;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
@@ -8,7 +9,6 @@ import java.util.List;
 
 @Entity
 @Table(name="author")
-@Indexed
 public class Author {
 
     @Id
@@ -24,6 +24,7 @@ public class Author {
     @Column(name="lastname")
     private String lastname;
 
+    @ContainedIn
     @ManyToMany(mappedBy="authorList")
     private List<AbstractBook> bookList;
 

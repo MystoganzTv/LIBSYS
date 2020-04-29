@@ -10,9 +10,17 @@ import javax.persistence.Table;
 @Table(name = "removed_books")
 @PrimaryKeyJoinColumn(name = "removed_object_id")
 public class RemovedBook extends AbstractRemovedObject {
-
+	
 	@OneToOne()
 	@JoinColumn(name = "book_id")
 	private Book book;
+
+	public Book getBook() {
+		return book;
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
+	}
 
 }
