@@ -15,4 +15,4 @@ public class RemovedBook extends AbstractRemovedObject {
 	@JoinColumn(name = "book_id")
 	private Book book;
 
-    }
+}

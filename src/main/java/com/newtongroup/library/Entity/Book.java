@@ -14,12 +14,11 @@ import org.hibernate.search.annotations.Indexed;
 @Table(name = "books")
 @PrimaryKeyJoinColumn(name = "book_common_data_id")
 public class Book extends AbstractBook {
-	
-	
+
 	@ManyToOne()
 	@JoinColumn(name = "placement_id")
 	private Placement placement;
-	
+
 	@OneToOne(mappedBy = "book")
 	private RemovedBook removedBook;
 
@@ -38,8 +37,5 @@ public class Book extends AbstractBook {
 	public void setRemovedBook(RemovedBook removedBook) {
 		this.removedBook = removedBook;
 	}
-	
-	
-
 
 }
