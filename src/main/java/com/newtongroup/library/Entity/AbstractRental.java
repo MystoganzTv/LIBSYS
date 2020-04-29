@@ -12,9 +12,10 @@ import org.hibernate.search.annotations.Field;
 public abstract class AbstractRental {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Integer id;
-
+	
+	@Field
 	@Column(name="title")
 	private String title;
 
@@ -23,7 +24,7 @@ public abstract class AbstractRental {
 
 	@Column(name="publisher")
 	private String publisher;
-
+	
 	@Column(name="description")
 	private String description;
 

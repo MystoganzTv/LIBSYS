@@ -1,27 +1,27 @@
 package com.newtongroup.library.Entity;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 import org.hibernate.search.annotations.Indexed;
 
 @Entity
 @Indexed
 @Table(name = "books")
+@PrimaryKeyJoinColumn(name = "book_common_data_id")
 public class Book extends AbstractBook {
-
-	@ManyToMany()
-	@JoinTable(
-			name="book_author",
-			joinColumns = {@JoinColumn(name="idbook_author_book_id")},
-			inverseJoinColumns = {@JoinColumn(name="idbook_author_author_id")})
-
-//	@ManyToMany(mappedBy = "bookList")
-	private List<Author> authorList;
-
+	
+	
 	@ManyToOne()
 	@JoinColumn(name = "placement_id")
 	private Placement placement;
+	
+	@OneToOne(mappedBy = "book")
+	private RemovedBook removedBook;
 
 	public Placement getPlacement() {
 		return placement;
@@ -31,37 +31,15 @@ public class Book extends AbstractBook {
 		this.placement = placement;
 	}
 
-
-	public List<Author> getAuthorList() {
-		return authorList;
+	public RemovedBook getRemovedBook() {
+		return removedBook;
 	}
 
-//	public String getClassificationSystem() {
-//		return classificationSystem;
-//	}
-//
-//	public void setClassificationSystem(String classificationSystem) {
-//		this.classificationSystem = classificationSystem;
-//	}
-
-	public void setAuthorList(List<Author> authorList) {
-		this.authorList = authorList;
+	public void setRemovedBook(RemovedBook removedBook) {
+		this.removedBook = removedBook;
 	}
-	//	@Column(name="classification_system")
-//	private String classificationSystem;
-//
-//
-//	public String getClassificationSystem() {
-//		return classificationSystem;
-//	}
-//
-//	public void setClassificationSystem(String classificationSystem) {
-//		this.classificationSystem = classificationSystem;
-//	}
-
-
-
-
+	
+	
 
 
 }

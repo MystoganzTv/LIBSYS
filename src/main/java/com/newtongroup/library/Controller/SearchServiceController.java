@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.newtongroup.library.Entity.AbstractBook;
 import com.newtongroup.library.Entity.Book;
 import com.newtongroup.library.Service.SearchService;
 
@@ -24,7 +25,7 @@ public class SearchServiceController {
 		
 		if (searchText != null && !searchText.isEmpty() && !searchText.isBlank()) {
 			
-			List<Book> result = searchService.searchBooks(searchText);
+			List<AbstractBook> result = searchService.searchBooks(searchText);
 			model.addAttribute("results", result);
 		} else {
 			searchText = "";

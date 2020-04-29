@@ -10,6 +10,7 @@ import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
 import org.springframework.stereotype.Service;
 
+import com.newtongroup.library.Entity.AbstractBook;
 import com.newtongroup.library.Entity.AbstractRental;
 import com.newtongroup.library.Entity.Book;
 import com.newtongroup.library.Service.SearchService;
@@ -23,10 +24,10 @@ public class SearchServiceImpl implements SearchService {
 	
 	
 	
-	public List<Book> searchBooks(String searchText){
+	public List<AbstractBook> searchBooks(String searchText){
 		
 		FullTextQuery jpaQuery = searchBooksQuery(searchText);
-		List<Book> bookList = jpaQuery.getResultList();	
+		List<AbstractBook> bookList = jpaQuery.getResultList();	
 		
 		return bookList;
 	}
@@ -38,7 +39,7 @@ public class SearchServiceImpl implements SearchService {
 		//Create hibernate search dsl for the entity
 		org.hibernate.search.query.dsl.QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory()
 				.buildQueryBuilder()
-				.forEntity(AbstractRental.class)
+				.forEntity(AbstractBook.class)
 				.get();
 		
 		
@@ -51,7 +52,7 @@ public class SearchServiceImpl implements SearchService {
 		.createQuery();
 		
 		
-		org.hibernate.search.jpa.FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(query, Book.class);
+		org.hibernate.search.jpa.FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(query, AbstractBook.class);
 		
 		return fullTextQuery;
 		

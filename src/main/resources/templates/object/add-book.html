@@ -26,7 +26,7 @@
     <label for="select">Välj författare (håll nere ctrl eller shift för att välja fler):</label>
 
     <select class="form-control" id="select"  multiple
-            name="select"  th:field="${book.authorList}">
+             th:field="${book.authorList}">
 
         <option  th:each="author:${authors}"
                 th:text="${author.firstname+'&nbsp;'}+${author.lastname+'&nbsp;'}"

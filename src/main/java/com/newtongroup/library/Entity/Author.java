@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table (name="author")
+@Table(name="author")
 @Indexed
 public class Author {
 
@@ -24,16 +24,8 @@ public class Author {
     @Column(name="lastname")
     private String lastname;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name="book_author",
-//            joinColumns = {@JoinColumn(name="idbook_author_book_id")},
-//            inverseJoinColumns = {@JoinColumn(name="idbook_author_author_id")})
-    @ManyToMany(mappedBy = "authorList")
-    private List<Book>bookList;
-
-    @ManyToMany(mappedBy = "authorList")
-    private List<EBook>eBookList;
+    @ManyToMany(mappedBy="authorList")
+    private List<AbstractBook> bookList;
 
     public Author() {
     }
@@ -62,12 +54,5 @@ public class Author {
         this.lastname = lastname;
     }
 
-    public List<Book> getBookList() {
-        return bookList;
-    }
-
-    public void setBookList(List<Book> bookList) {
-        this.bookList = bookList;
-    }
 
 }
