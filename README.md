@@ -9,14 +9,14 @@ CREATE TABLE `admins` (
   `admin_id` varchar(100) NOT NULL,
   PRIMARY KEY (`admin_id`),
   CONSTRAINT `FK896rcns3hi5nil8sr2w9k0prj` FOREIGN KEY (`admin_id`) REFERENCES `persons` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `author` (
   `author_id` int(11) NOT NULL AUTO_INCREMENT,
   `firstname` varchar(255) DEFAULT NULL,
   `lastname` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`author_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `authorities` (
   `authority_id` int(11) NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE `books` (
   PRIMARY KEY (`id`),
   KEY `FKroi7sfrjbr6jpj6sd9dgte298` (`placement_id`),
   CONSTRAINT `FKroi7sfrjbr6jpj6sd9dgte298` FOREIGN KEY (`placement_id`) REFERENCES `placements` (`placement_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `book_author` (
   `idbook_author_book_id` int(11) NOT NULL,
@@ -44,13 +44,13 @@ CREATE TABLE `book_author` (
   KEY `FKbgcrllbtw4n0y162b3n1c8aku` (`idbook_author_book_id`),
   CONSTRAINT `FK40x4sr78094gad7lmdb3nk9lx` FOREIGN KEY (`idbook_author_author_id`) REFERENCES `author` (`author_id`),
   CONSTRAINT `FKbgcrllbtw4n0y162b3n1c8aku` FOREIGN KEY (`idbook_author_book_id`) REFERENCES `books` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `bosses` (
   `boss_id` varchar(100) NOT NULL,
   PRIMARY KEY (`boss_id`),
   CONSTRAINT `FKekeu2uodmcg4u5sa3msppmf5g` FOREIGN KEY (`boss_id`) REFERENCES `persons` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `ebook_author` (
   `idebook_author_ebook_id` int(11) NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE `ebook_author` (
   KEY `FKn7qgorn7n6cmtw3rwfjksa2q4` (`idebook_author_ebook_id`),
   CONSTRAINT `FKh2wsh8j74bjc0ogfpmvqsceu5` FOREIGN KEY (`idebook_author_author_id`) REFERENCES `author` (`author_id`),
   CONSTRAINT `FKn7qgorn7n6cmtw3rwfjksa2q4` FOREIGN KEY (`idebook_author_ebook_id`) REFERENCES `e_books` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `e_books` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -70,19 +70,19 @@ CREATE TABLE `e_books` (
   `isbn` varchar(255) DEFAULT NULL,
   `download_link` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `categories` (
   `category_id` bigint(20) NOT NULL,
   `categorytype` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `librarians` (
   `librarian_id` varchar(100) NOT NULL,
   PRIMARY KEY (`librarian_id`),
   CONSTRAINT `FKlntx8txqci73x57tow852w6wd` FOREIGN KEY (`librarian_id`) REFERENCES `persons` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `persons` (
   `email` varchar(150) NOT NULL,
@@ -94,14 +94,14 @@ CREATE TABLE `persons` (
   `city` varchar(100) DEFAULT NULL,
   `phone` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `placements` (
   `placement_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `ddk` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`placement_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `removed_books` (
   `book_id` int(11) NOT NULL,
@@ -113,7 +113,7 @@ CREATE TABLE `removed_books` (
   `publisher` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`book_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `seminaries` (
   `seminary_id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -123,7 +123,7 @@ CREATE TABLE `seminaries` (
   `starttime` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`seminary_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `removed_seminaries` (
   `seminary_id` bigint(20) NOT NULL,
@@ -135,7 +135,7 @@ CREATE TABLE `removed_seminaries` (
   `starttime` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`seminary_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `removed_e_books` (
   `e_book_id` int(11) NOT NULL,
@@ -148,7 +148,7 @@ CREATE TABLE `removed_e_books` (
   `publisher` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`e_book_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `removed_books` (
   `book_id` int(11) NOT NULL,
@@ -160,20 +160,20 @@ CREATE TABLE `removed_books` (
   `publisher` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`book_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `publishers` (
   `publisher_id` bigint(20) NOT NULL,
   `publisher` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`publisher_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `placements` (
   `placement_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `ddk` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`placement_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -186,7 +186,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
   KEY `fk_user_authority_idx` (`user_authority`),
   CONSTRAINT `fk_user_authority` FOREIGN KEY (`user_authority`) REFERENCES `authorities` (`authority_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `visitors` (
   `librarycard` int(11) NOT NULL AUTO_INCREMENT,
@@ -194,4 +194,4 @@ CREATE TABLE `visitors` (
   PRIMARY KEY (`librarycard`),
   KEY `FK5iqxn8ua7ot6m8hjsfkl1j2k6` (`visitor_id`),
   CONSTRAINT `FK5iqxn8ua7ot6m8hjsfkl1j2k6` FOREIGN KEY (`visitor_id`) REFERENCES `persons` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
