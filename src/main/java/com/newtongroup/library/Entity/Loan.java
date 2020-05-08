@@ -6,12 +6,21 @@ import java.util.List;
 
 public class Loan {
 
+    private long loanId;
     private LibraryCard libraryCard;
     private Book book;
     private Date dateLoanStart;
     private Date dateLoanEnd;
 
     public Loan() {
+    }
+
+    public long getLoanId() {
+        return loanId;
+    }
+
+    public void setLoanId(long loanId) {
+        this.loanId = loanId;
     }
 
     public LibraryCard getLibraryCard() {
