@@ -11,6 +11,7 @@ public class Loan {
     private Book book;
     private Date dateLoanStart;
     private Date dateLoanEnd;
+    private Date dateLoanReturned;
 
     public Loan() {
     }
