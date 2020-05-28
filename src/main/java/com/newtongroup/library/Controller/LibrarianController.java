@@ -3,6 +3,7 @@ package com.newtongroup.library.Controller;
 import com.newtongroup.library.Entity.*;
 import com.newtongroup.library.Repository.*;
 import com.newtongroup.library.Utils.HeaderUtils;
+import com.newtongroup.library.Wrapper.UserPerson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -42,6 +43,9 @@ public class LibrarianController {
 
     @Autowired
     private EBookRepository eBookRepository;
+
+    @Autowired
+    private UserAuthorityRepository userAuthorityRepository;
 
 
 
@@ -153,6 +157,32 @@ public class LibrarianController {
 
         return "loan/return-success";
     }
+
+    @RequestMapping("/update/visitor")
+    public String createNewLibrary(@ModelAttribute("userPerson") UserPerson userPerson, Model theModel, Principal principal) {
+        theModel.addAttribute("header", HeaderUtils.getHeaderString(userRepository.findByUsername(principal.getName())));
+
+        User user = userRepository.findByUsername(principal.getName());
+        LibraryCard libraryCard = visitorRepository.findByEmail(user.getUsername()).getActiveLibraryCard();
+
+        if(libraryCard == null) {
+            newLibraryCard(userPerson);
+            return "register-visitor/visitor-registration-confirmation";
+        } else {
+            return "error/not-valid-cause";
+        }
+    }
+
+    private void newLibraryCard(UserPerson userPerson) {
+
+        ArrayList<LibraryCard> libraryCards = new ArrayList<>();
+        LibraryCard libraryCard = new LibraryCard();
+        libraryCard.setActive(true);
+        libraryCard.setVisitor(userPerson.getVisitor());
+        libraryCards.add(libraryCard);
+        userPerson.getVisitor().setLibraryCards(libraryCards);
+    }
+
 
     private void hashAllUSerData(User user) {
         Visitor visitor = visitorRepository.findByEmail(user.getUsername());
