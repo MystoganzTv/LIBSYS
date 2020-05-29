@@ -51,7 +51,7 @@
         <thead>
         <tr>
             <th>Förnamn</th>
-            <th>Efternman</th>
+            <th>Efternamn</th>
             <th>Epost</th>
             <th>Bibliotekskortsnummer</th>
             <th>Se lån</th>
@@ -64,7 +64,6 @@
             <td th:text="${visitor.lastName}"></td>
             <td th:text="${visitor.email}"></td>
             <td th:text="${visitor.activeLibraryCard.libraryCardNumber}"></td>
-            <td th:text="${visitor.createNewLibraryCard}"> </td>
             <td>
                 <form th:action="@{/update/visitor-form}">
                     <button class="btn4" type="submit" th:name="visitorId" th:value="${visitor.email}">Uppdatera</button>
