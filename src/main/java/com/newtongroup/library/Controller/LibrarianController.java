@@ -158,19 +158,29 @@ public class LibrarianController {
     public String createNewLibrary(Model theModel, Principal principal) {
         theModel.addAttribute("header", HeaderUtils.getHeaderString(userRepository.findByUsername(principal.getName())));
 
-        List<LibraryCard> libraryCardsList = libraryCardRepository.findAll()
-                .stream()
-                .filter(card -> card.getVisitor().isActive())
-                .collect(Collectors.toList());
+        List<LibraryCard> libraryCardsList = new ArrayList<>(libraryCardRepository.findAll());
 
-        Visitor visitor = new Visitor();
+
+
+
 
         List<Visitor> visitorList = visitorRepository.findAll();
+        List<Visitor> filteredVisitorList = new ArrayList<>();
+
+        for (Visitor visitorToAdd: visitorList) {
+            if (visitorToAdd.getActiveLibraryCard() == null) {
+                filteredVisitorList.add(visitorToAdd);
+            }
+        }
+
+        filteredVisitorList.size();
+        visitorList.size();
+
+        
+
 
 
         theModel.addAttribute("libraryCards", libraryCardsList);
-        theModel.addAttribute("visitorList", visitorList);
-        theModel.addAttribute("visitor", visitor);
 
 
         return "lock/lock-register";
@@ -178,15 +188,14 @@ public class LibrarianController {
 
     @GetMapping("/save-new-librarycard")
         public String saveNewLibraryCard(
-                @ModelAttribute (name = "user") User user,
+                @ModelAttribute (name = "visitor") Visitor visitor,
                 @ModelAttribute (name = "libraryCard") LibraryCard libraryCard,
                 Model model, Principal principal){
         model.addAttribute("header", HeaderUtils.getHeaderString(userRepository.findByUsername(principal.getName())));
-       User user1 = userRepository.getOne(user.getId());
-       UserPerson userPerson=new UserPerson();
 
-        if(libraryCard.isActive()) {
-            newLibraryCard(userPerson);
+
+        if(!libraryCard.isActive()) {
+            newLibraryCard(visitor);
             return "register-visitor/visitor-registration-confirmation";
         } else {
             return "error/not-valid-card-already-unlocked";
@@ -203,13 +212,13 @@ public class LibrarianController {
 //        return null;
 //    }
 
-    private void newLibraryCard(UserPerson userPerson) {
+    private void newLibraryCard(Visitor visitor) {
         ArrayList<LibraryCard> libraryCards = new ArrayList<>();
         LibraryCard libraryCard = new LibraryCard();
         libraryCard.setActive(true);
-        libraryCard.setVisitor(userPerson.getVisitor());
+        libraryCard.setVisitor(visitor);
         libraryCards.add(libraryCard);
-        userPerson.getVisitor().setLibraryCards(libraryCards);
+        visitor.setLibraryCards(libraryCards);
     }
 
 
