@@ -43,17 +43,13 @@ public class LibrarianController {
     private EBookRepository eBookRepository;
 
     @Autowired
-    private UserAuthorityRepository userAuthorityRepository;
-
-    @Autowired
-    private PersonRepository personRepository;
-
+    private LibraryCardRepository libraryCardRepository;
 
 
     private String header = "librarian/bootstrapheader.html";
 
     @RequestMapping("/")
-    public String mainView(Model theModel, Principal principal){
+    public String mainView(Model theModel, Principal principal) {
         theModel.addAttribute("header", HeaderUtils.getHeaderString(userRepository.findByUsername(principal.getName())));
         return "librarian/start";
     }
@@ -67,16 +63,16 @@ public class LibrarianController {
     }
 
     @RequestMapping("/delete-visitor")
-    public String deleteUser(@RequestParam(name="email") String email, Model theModel, Principal principal) {
+    public String deleteUser(@RequestParam(name = "email") String email, Model theModel, Principal principal) {
         theModel.addAttribute("header", HeaderUtils.getHeaderString(userRepository.findByUsername(principal.getName())));
         User user = userRepository.findByUsername(email);
-        if(user == null) {
+        if (user == null) {
             return "error/email-cannot-be-found";
         } else if (user.getAuthority().getAuthorityName().equals("ROLE_VISITOR")) {
             Visitor visitor = visitorRepository.findByEmail(user.getUsername());
 
             for (BookLoan bookLoan : visitor.getActiveLibraryCard().getBookLoans()) {
-                if(!bookLoan.getBookReturned()) {
+                if (!bookLoan.getBookReturned()) {
                     List<BookLoan> bookLoans = visitor.getActiveLibraryCard().getBookLoans()
                             .stream()
                             .filter(loan -> loan.getBookReturned() == false)
@@ -107,7 +103,6 @@ public class LibrarianController {
         Book book = new Book();
 
 
-
         theModel.addAttribute("bookList", bookList);
         theModel.addAttribute("book", book);
 
@@ -115,8 +110,8 @@ public class LibrarianController {
     }
 
     @RequestMapping("/return-book")
-    private String returnBook(@RequestParam(name="bookId", required = false) Long bookIdTEST,
-                              @RequestParam(name="eBookId", required = false) Long eBookId,
+    private String returnBook(@RequestParam(name = "bookId", required = false) Long bookIdTEST,
+                              @RequestParam(name = "eBookId", required = false) Long eBookId,
                               @ModelAttribute("book") Book book,
                               @ModelAttribute("bookLoan") BookLoan bookLoan,
                               Model theModel, Principal principal) {
@@ -126,11 +121,11 @@ public class LibrarianController {
         System.out.println(bookId);
 
 
-        if(bookId != null) {
+        if (bookId != null) {
             Book bookToReturn = bookrepository.findById(bookId).orElse(null);
             BookLoan loan = bookLoanRepository.findByBookAndIsBookReturned(bookToReturn, false);
 
-            if(loan == null) {
+            if (loan == null) {
                 return "error/book-or-no-active-librarycard";
             }
 
@@ -139,11 +134,11 @@ public class LibrarianController {
             loan.setBookReturned(true);
             bookLoanRepository.save(loan);
 
-        } else if ( eBookId != null) {
+        } else if (eBookId != null) {
             EBook bookToReturn = eBookRepository.findById(eBookId).orElse(null);
             EbookLoan loan = ebookLoanRepository.findByEbookAndIsEbookReturned(bookToReturn, false);
 
-            if(loan == null) {
+            if (loan == null) {
                 return "error/book-or-no-active-librarycard";
             }
 
@@ -162,33 +157,41 @@ public class LibrarianController {
     @GetMapping("/new-librarycard")
     public String createNewLibrary(Model theModel, Principal principal) {
         theModel.addAttribute("header", HeaderUtils.getHeaderString(userRepository.findByUsername(principal.getName())));
+
+        List<LibraryCard> libraryCardsList = libraryCardRepository.findAll()
+                .stream()
+                .filter(card -> card.getVisitor().isActive())
+                .collect(Collectors.toList());
+
         Visitor visitor = new Visitor();
 
-          List<Visitor> visitorList = visitorRepository.findAll();
+        List<Visitor> visitorList = visitorRepository.findAll();
 
 
-          theModel.addAttribute("visitorList", visitorList);
-          theModel.addAttribute("visitor", visitor);
+        theModel.addAttribute("libraryCards", libraryCardsList);
+        theModel.addAttribute("visitorList", visitorList);
+        theModel.addAttribute("visitor", visitor);
 
 
         return "lock/lock-register";
     }
 
-//    @PostMapping ("/save-new-librarycard")
+    @GetMapping("/save-new-librarycard")
+        public String saveNewLibraryCard(
+                @ModelAttribute (name = "user") User user,
+                @ModelAttribute (name = "libraryCard") LibraryCard libraryCard,
+                Model model, Principal principal){
+        model.addAttribute("header", HeaderUtils.getHeaderString(userRepository.findByUsername(principal.getName())));
+       User user1 = userRepository.getOne(user.getId());
+       UserPerson userPerson=new UserPerson();
 
-//    public String saveNewLibraryCard(@ModelAttribute (name = "visitor") Visitor visitor, Model model, Principal principal){
-//        model.addAttribute("header", HeaderUtils.getHeaderString(userRepository.findByUsername(principal.getName())));
-//
-//
-//    }
-
-//        if(libraryCard.isActive()) {
-//            newLibraryCard(userPerson);
-//            return "register-visitor/visitor-registration-confirmation";
-//        } else {
-//            return "error/not-valid-card-already-unlocked";
-//        }
-//    }
+        if(libraryCard.isActive()) {
+            newLibraryCard(userPerson);
+            return "register-visitor/visitor-registration-confirmation";
+        } else {
+            return "error/not-valid-card-already-unlocked";
+        }
+    }
 
 //    public LibraryCard getNewLibraryCard() {
 //        for (LibraryCard card : libraryCards) {
@@ -224,12 +227,12 @@ public class LibrarianController {
         visitorRepository.save(visitor);
     }
 
-    private List<Book> getActiveBookList(){
+    private List<Book> getActiveBookList() {
         List<Book> tempList = bookrepository.findAll();
         List<Book> bookList = new ArrayList<>();
 
-        for(Book temp : tempList){
-            if(!temp.isAvailable()){
+        for (Book temp : tempList) {
+            if (!temp.isAvailable()) {
                 bookList.add(temp);
             }
         }

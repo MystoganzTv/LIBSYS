@@ -41,7 +41,7 @@ public class LockController {
 
         List<LibraryCard> libraryCardsList = libraryCardRepository.findAll()
                 .stream()
-                .filter(card -> card.getVisitor().isActive() == true)
+                .filter(card -> card.getVisitor().isActive())
                 .collect(Collectors.toList());
 
         List<Lock> locksList = lockRepository.findAll();

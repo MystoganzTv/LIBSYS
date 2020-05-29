@@ -125,6 +125,26 @@
         </div>
     </form>
 </div>
+<div class="container" id="div">
+    <form th:action="@{/new-librarycard}" class="form-group">
+        <div class="container mt-5">
+            <div style="width: 35%">
+                <div th:object="${libraryCard}">
+                    <h3 class="secondary-text">Nytt bibliotekskort</h3>
+                    <label id="l7" for="select">Användare:</label>
+
+                    <select class="form-control" id="select" name="libraryCard" required>
+                        <option th:each="libraryCard:${libraryCards}"
+                                th:text="${libraryCard.visitor.personId +'&nbsp;' +'&nbsp;' +'&nbsp;'}+${libraryCard.visitor.email+'&nbsp;'}"
+                                th:value="${libraryCard.visitor.personId}"></option>
+                    </select>
+                    <button id="save" style="width: 200px" type="submit" class="btn4">Nytt</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
 <!--<div class="container" id="div">-->
 <!--    <form action="/librarian/new-librarycard" class="form-group">-->
 <!--        <div class="container mt-5">-->
@@ -145,28 +165,28 @@
 <!--    </form>-->
 <!--</div>-->
 <!--<h1 align="center">Radera författare</h1>-->
-<div class="container" id="div">
-    <form action="/librarian/new-librarycard" class="form-group"
-          th:object="${visitor}">
-        <!--        <input type="hidden" name="_method" value="delete"/>-->
-        <!--          onsubmit="myFunction()"-->
+<!--<div class="container" id="div">-->
+<!--    <form action="/librarian/new-librarycard" class="form-group"-->
+<!--          th:object="${visitor}">-->
+<!--        &lt;!&ndash;        <input type="hidden" name="_method" value="delete"/>&ndash;&gt;-->
+<!--        &lt;!&ndash;          onsubmit="myFunction()"&ndash;&gt;-->
 
-        <div class="container mt-5" style="margin-left: 30.5%">
-            <div>
-                <div class="col-md-6">
-                    <label id="l1" for="select">Författare:</label>
-                    <select id="select1" name= "email" th:object="${visitorList}" required>
-                        <option th:each="visitors:${visitorList}"
-                                th:text="${visitors.email+'&nbsp;'}"
-                                th:value="${visitors.email}"></option>
-                    </select>
+<!--        <div class="container mt-5" style="margin-left: 30.5%">-->
+<!--            <div>-->
+<!--                <div class="col-md-6">-->
+<!--                    <label id="l1" for="select">Författare:</label>-->
+<!--                    <select id="select1" name= "email" th:object="${visitorList}" required>-->
+<!--                        <option th:each="visitors:${visitorList}"-->
+<!--                                th:text="${visitors.email+'&nbsp;'}"-->
+<!--                                th:value="${visitors.email}"></option>-->
+<!--                    </select>-->
 
-                </div>
-            </div>
-        </div>
-        <button  th:value="${visitor.email}" onclick="return ConfirmDelete()" id="save" class="btn4" type="submit">Radera</button>
-    </form>
-</div>
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <button  th:value="${visitor.email}" onclick="return ConfirmDelete()" id="save" class="btn4" type="submit">Radera</button>-->
+<!--    </form>-->
+<!--</div>-->
 
 
 <script>
