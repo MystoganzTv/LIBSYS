@@ -34,7 +34,6 @@ public class Visitor extends Person{
     }
 
     public LibraryCard getActiveLibraryCard() {
-
         for (LibraryCard card : libraryCards) {
             if(card.isActive()) {
                 return card;

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="sv" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:visitors="http://www.w3.org/1999/xhtml">
 <head>
     <title>Bibliotekskortshantering</title>
     <meta charset="utf-8">
@@ -123,21 +123,76 @@
 
             <button id="save" type="submit" class="btn btn-danger">Spärra</button>
         </div>
-
-
-        <script>
-            tail.select('#select', {
-                search: true,
-                multiLimit: 15,
-                hideSelected: true,
-                deselect: true,
-                hideDisabled: true,
-                multiShowCount: false,
-                multiContainer: true,
-                placeholder: 'Välj bibliotekskort'
-            });
-        </script>
     </form>
+</div>
+<!--<div class="container" id="div">-->
+<!--    <form action="/librarian/new-librarycard" class="form-group">-->
+<!--        <div class="container mt-5">-->
+<!--            <div style="width: 35%">-->
+<!--                <div>-->
+<!--                    <h3 class="secondary-text">Nytt bibliotekskort</h3>-->
+<!--                    <label id="l8" for="select">Användare:</label>-->
+<!--                    <br>-->
+<!--                    <select class="form-control" id="select1" name="personId" th:object="${visitorList}"  required>-->
+<!--                        <option th:each="visitors:${visitorList}"-->
+<!--                                th:text="${visitors.email}"-->
+<!--                                th:value="${visitors.personId}"></option>-->
+<!--                    </select>-->
+<!--                    <button id="save" type="submit" class="btn4">Nytt bibliotekskort</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </form>-->
+<!--</div>-->
+<!--<h1 align="center">Radera författare</h1>-->
+<div class="container" id="div">
+    <form action="/librarian/new-librarycard" class="form-group"
+          th:object="${visitor}">
+        <!--        <input type="hidden" name="_method" value="delete"/>-->
+        <!--          onsubmit="myFunction()"-->
+
+        <div class="container mt-5" style="margin-left: 30.5%">
+            <div>
+                <div class="col-md-6">
+                    <label id="l1" for="select">Författare:</label>
+                    <select id="select1" name= "email" th:object="${visitorList}" required>
+                        <option th:each="visitors:${visitorList}"
+                                th:text="${visitors.email+'&nbsp;'}"
+                                th:value="${visitors.email}"></option>
+                    </select>
+
+                </div>
+            </div>
+        </div>
+        <button  th:value="${visitor.email}" onclick="return ConfirmDelete()" id="save" class="btn4" type="submit">Radera</button>
+    </form>
+</div>
+
+
+<script>
+    tail.select('#select', {
+        search: true,
+        multiLimit: 15,
+        hideSelected: true,
+        deselect: true,
+        hideDisabled: true,
+        multiShowCount: false,
+        multiContainer: true,
+        placeholder: 'Välj bibliotekskort'
+    });
+
+    tail.select('#select1', {
+        search: true,
+        multiLimit: 15,
+        hideSelected: true,
+        deselect: true,
+        hideDisabled: true,
+        multiShowCount: false,
+        multiContainer: true,
+        placeholder: 'Välj bibliotekskort'
+    });
+</script>
+</form>
 
 </div>
 </body>
