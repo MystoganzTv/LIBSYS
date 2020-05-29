@@ -158,23 +158,22 @@ public class LibrarianController {
         return "loan/return-success";
     }
 
-    @RequestMapping("/update/visitor")
+    @RequestMapping("/edit-object/new-librarycard")
     public String createNewLibrary(@ModelAttribute("userPerson") UserPerson userPerson, Model theModel, Principal principal) {
         theModel.addAttribute("header", HeaderUtils.getHeaderString(userRepository.findByUsername(principal.getName())));
 
         User user = userRepository.findByUsername(principal.getName());
         LibraryCard libraryCard = visitorRepository.findByEmail(user.getUsername()).getActiveLibraryCard();
 
-        if(libraryCard == null) {
+        if(libraryCard.isActive()) {
             newLibraryCard(userPerson);
             return "register-visitor/visitor-registration-confirmation";
         } else {
-            return "error/not-valid-cause";
+            return "error/not-valid-card-already-unlocked";
         }
     }
 
     private void newLibraryCard(UserPerson userPerson) {
-
         ArrayList<LibraryCard> libraryCards = new ArrayList<>();
         LibraryCard libraryCard = new LibraryCard();
         libraryCard.setActive(true);

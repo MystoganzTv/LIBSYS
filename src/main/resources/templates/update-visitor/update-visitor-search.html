@@ -69,6 +69,11 @@
                     <button class="btn4" type="submit" th:name="visitorId" th:value="${visitor.email}">Uppdatera</button>
                 </form>
             </td>
+            <td>
+                <form th:action="@{/edit-object/new-librarycard}">
+                    <button class="btn4" type="submit">Nytt bibliotekskort</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
