@@ -72,7 +72,7 @@
             <div style="width: 35%">
                 <div th:object="${libraryCard}">
                     <h3 class="secondary-text">Lås upp bibliotekskort</h3>
-                    <label id="l7" for="select">Bibliotekskort:</label>
+                    <label id="l1" for="select">Bibliotekskort:</label>
                     <br>
                     <select class="form-control" id="select" name="libraryCard" required>
                         <option th:each="libraryCard:${libraryCards}"
@@ -84,7 +84,7 @@
         </div>
         <br>
         <div class="addPadding" th:object="${unlock}">
-            <label id="l5" for="unlock">Motivera anledning till upplåsning</label>
+            <label id="l2" for="unlock">Motivera anledning till upplåsning</label>
             <select class="form-control" id="unlock" name="unlock" required>
                 <option th:each="unlock:${unlocks}"
                         th:text="${unlock.cause}"
@@ -102,7 +102,7 @@
             <div style="width: 35%">
                 <div th:object="${libraryCard}">
                     <h3 class="secondary-text">Spärra bibliotekskort</h3>
-                    <label id="l7" for="select">Bibliotekskort:</label>
+                    <label id="l3" for="select">Bibliotekskort:</label>
                     <br>
                     <select class="form-control" id="select" name="libraryCard" required>
                         <option th:each="libraryCard:${libraryCards}"
@@ -114,7 +114,7 @@
         </div>
         <br>
         <div class="addPadding" th:object="${lock}">
-            <label id="l5" for="lock">Motivera anledning till spärrning</label>
+            <label id="l4" for="lock">Motivera anledning till spärrning</label>
             <select class="form-control" style="padding-left: 15px" id="lock" name="lock" required>
                 <option th:each="lock:${locks}"
                         th:text="${lock.cause}"
@@ -123,7 +123,6 @@
 
             <button id="save" type="submit" class="btn btn-danger">Spärra</button>
         </div>
-
 
         <script>
             tail.select('#select', {
@@ -140,5 +139,38 @@
     </form>
 
 </div>
+
+    </form>
+</div>
+<div class="container" id="div">
+    <form th:action="@{/librarian/new-librarycard}" class="form-group">
+        <div class="container mt-5">
+            <div style="width: 35%">
+                <div th:object="${libraryCard}">
+                    <h3 class="secondary-text">Nytt bibliotekskort</h3>
+                    <label id="l5" for="select">Användare:</label>
+                    <select class="form-control" id="select" name="libraryCard" required>
+                        <option th:each="libraryCard:${libraryCards}"
+                                th:text="${libraryCard.visitor.personId +'&nbsp;' +'&nbsp;' +'&nbsp;'}+${libraryCard.visitor.email+'&nbsp;'}"
+                                th:value="${libraryCard.visitor.personId}"></option>
+                    </select>
+                    <button id="save" th:action="@{save-new-librarycard}" name="save" style="width: 200px" type="submit" class="btn4">Nytt</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    tail.select('#select', {
+        search: true,
+        multiLimit: 15,
+        hideSelected: true,
+        deselect: true,
+        hideDisabled: true,
+        multiShowCount: false,
+        multiContainer: true,
+        placeholder: 'Välj bibliotekskort'
+    });
+</script>
 </body>
 </html>

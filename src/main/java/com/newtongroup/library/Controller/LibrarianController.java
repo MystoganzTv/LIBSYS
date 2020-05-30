@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -153,6 +154,67 @@ public class LibrarianController {
 
         return "loan/return-success";
     }
+
+    @GetMapping("/new-librarycard")
+    public String createNewLibrary(Model theModel, Principal principal) {
+        theModel.addAttribute("header", HeaderUtils.getHeaderString(userRepository.findByUsername(principal.getName())));
+
+        List<LibraryCard> libraryCardsList = new ArrayList<>(libraryCardRepository.findAll());
+        List<Visitor> visitorList = visitorRepository.findAll();
+        List<Visitor> filteredVisitorList = new ArrayList<>();
+
+        for (Visitor visitorToAdd: visitorList) {
+            if (visitorToAdd.getActiveLibraryCard() == null) {
+                filteredVisitorList.add(visitorToAdd);
+            }
+        }
+
+        filteredVisitorList.size();
+        visitorList.size();
+
+        theModel.addAttribute("libraryCards", libraryCardsList);
+        return "lock/lock-register";
+    }
+
+    @GetMapping("/save-new-librarycard")
+        public String saveNewLibraryCard(
+                @ModelAttribute (name = "visitor") Visitor visitor,
+                @ModelAttribute (name = "libraryCard") LibraryCard libraryCard,
+                Model model, Principal principal){
+        model.addAttribute("header", HeaderUtils.getHeaderString(userRepository.findByUsername(principal.getName())));
+
+        Visitor visitor1= visitorRepository.getOne(visitor.getPersonId());
+
+        if(!libraryCard.isActive()) {
+
+            LibraryCard libraryCard1= new LibraryCard();
+            libraryCard1.setVisitor(visitor1);
+            libraryCard1.setActive(true);
+            libraryCardRepository.save(libraryCard);
+            return "register-visitor/visitor-registration-confirmation";
+        }
+            return "error/not-valid-card-already-unlocked";
+    }
+
+//    public LibraryCard getNewLibraryCard() {
+//        for (LibraryCard card : libraryCards) {
+//            if (card.isActive()) {
+//                setLibraryCards(libraryCards);
+//                return card;
+//            }
+//        }
+//        return null;
+//    }
+
+    private void newLibraryCard(Visitor visitor) {
+        ArrayList<LibraryCard> libraryCards = new ArrayList<>();
+        LibraryCard libraryCard = new LibraryCard();
+        libraryCard.setActive(true);
+        libraryCard.setVisitor(visitor);
+        libraryCards.add(libraryCard);
+        visitor.setLibraryCards(libraryCards);
+    }
+
 
     private void hashAllUSerData(User user) {
         Visitor visitor = visitorRepository.findByEmail(user.getUsername());
