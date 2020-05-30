@@ -44,7 +44,8 @@ public class LibrarianController {
     @Autowired
     private EBookRepository eBookRepository;
 
-
+    @Autowired
+    private LibraryCardRepository libraryCardRepository;
 
     private String header = "librarian/bootstrapheader.html";
 
