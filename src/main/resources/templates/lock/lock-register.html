@@ -146,13 +146,13 @@
     <form th:action="@{/librarian/new-librarycard}" class="form-group">
         <div class="container mt-5">
             <div style="width: 35%">
-                <div th:object="${libraryCard}">
+                <div th:object="${visitor}">
                     <h3 class="secondary-text">Nytt bibliotekskort</h3>
                     <label id="l5" for="select">Användare:</label>
-                    <select class="form-control" id="select" name="libraryCard" required>
-                        <option th:each="libraryCard:${libraryCards}"
-                                th:text="${libraryCard.visitor.personId +'&nbsp;' +'&nbsp;' +'&nbsp;'}+${libraryCard.visitor.email+'&nbsp;'}"
-                                th:value="${libraryCard.visitor.personId}"></option>
+                    <select class="form-control" id="select" name="visitor" required>
+                        <option th:each="visitors:${visitorList}"
+                                th:text="${visitors.personId +'&nbsp;' +'&nbsp;' +'&nbsp;'}+${visitors.email+'&nbsp;'}"
+                                th:value="${visitors.personId}"></option>
                     </select>
                     <button id="save" th:action="@{save-new-librarycard}" name="save" style="width: 200px" type="submit" class="btn4">Nytt</button>
                 </div>

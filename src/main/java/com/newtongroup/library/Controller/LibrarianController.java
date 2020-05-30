@@ -159,43 +159,56 @@ public class LibrarianController {
     @GetMapping("/new-librarycard")
     public String createNewLibrary(Model theModel, Principal principal) {
         theModel.addAttribute("header", HeaderUtils.getHeaderString(userRepository.findByUsername(principal.getName())));
-
-        List<LibraryCard> libraryCardsList = new ArrayList<>(libraryCardRepository.findAll());
+        Visitor visitor=new Visitor();
+       // List<LibraryCard> libraryCardsList = new ArrayList<>(libraryCardRepository.findAll());
         List<Visitor> visitorList = visitorRepository.findAll();
-        List<Visitor> filteredVisitorList = new ArrayList<>();
-
-        for (Visitor visitorToAdd: visitorList) {
-            if (visitorToAdd.getActiveLibraryCard() == null) {
-                filteredVisitorList.add(visitorToAdd);
-            }
-        }
-
-        filteredVisitorList.size();
+       // List<Visitor> filteredVisitorList = new ArrayList<>();
         visitorList.size();
+       // for (Visitor visitorToAdd: visitorList) {
+        // if (visitorToAdd.getActiveLibraryCard() == null) {
+//                filteredVisitorList.add(visitorToAdd);
+//            }
+//        }
+//
+//        filteredVisitorList.size();
 
-        theModel.addAttribute("libraryCards", libraryCardsList);
+
+
+
+        theModel.addAttribute("visitorList", visitorList);
+        theModel.addAttribute("visitor", visitor);
+
         return "lock/lock-register";
     }
 
     @GetMapping("/save-new-librarycard")
         public String saveNewLibraryCard(
                 @ModelAttribute (name = "visitor") Visitor visitor,
-                @ModelAttribute (name = "libraryCard") LibraryCard libraryCard,
+                //@ModelAttribute (name = "libraryCard") LibraryCard libraryCard,
                 Model model, Principal principal){
         model.addAttribute("header", HeaderUtils.getHeaderString(userRepository.findByUsername(principal.getName())));
 
-        Visitor visitor1= visitorRepository.getOne(visitor.getPersonId());
+        visitorRepository.getOne(visitor.getPersonId());
 
-        if(!libraryCard.isActive()) {
+       // if(!libraryCard.isActive()) {
 
-            LibraryCard libraryCard1= new LibraryCard();
-            libraryCard1.setVisitor(visitor1);
-            libraryCard1.setActive(true);
+            LibraryCard libraryCard= new LibraryCard();
+            libraryCard.setVisitor(visitor);
+            libraryCard.setActive(true);
             libraryCardRepository.save(libraryCard);
+
+            visitor.setActive(true);
+
+            List<LibraryCard> libraryCardList=visitor.getLibraryCards();
+
+            libraryCardList.add(libraryCard);
+            visitor.setLibraryCards(libraryCardList);
+            visitorRepository.save(visitor);
+
             return "register-visitor/visitor-registration-confirmation";
         }
-            return "error/not-valid-card-already-unlocked";
-    }
+           // return "error/not-valid-card-already-unlocked";
+  //  }
 
 //    public LibraryCard getNewLibraryCard() {
 //        for (LibraryCard card : libraryCards) {
